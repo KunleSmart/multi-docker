@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t kunlesmart/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run kunlesmart/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t kunlesmart/multi-client ./client
+  - docker build -t kunlesmart/multi-nginx ./nginx
+  - docker build -t kunlesmart/multi-server ./server
+  - docker build -t kunlesmart/multi-worker ./worker
+#Login to docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Take the images and push them to docker
+  - docker push kunlesmart/multi-client
+  - docker push kunlesmart/multi-nginx
+  - docker push kunlesmart/multi-server
+  - docker push kunlesmart/multi-worker
