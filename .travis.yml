@@ -6,7 +6,7 @@ before_install:
   - docker build -t kunlesmart/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run kunlesmart/react-test npm test -- --coverage
+  - docker run kunlesmart/react-test npm test
 
 after_success:
   - docker build -t kunlesmart/multi-client ./client
