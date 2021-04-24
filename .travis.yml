@@ -13,7 +13,7 @@ after_success:
   - docker build -t kunlesmart/multi-nginx ./nginx
   - docker build -t kunlesmart/multi-server ./server
   - docker build -t kunlesmart/multi-worker ./worker
-#Login to docker
+  #Login to docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #Take the images and push them to docker
   - docker push kunlesmart/multi-client
